@@ -174,8 +174,7 @@
         </tbody>
     </table>
 
-    <script>
-        // Stats counter
+    <script>        // Stats counter
         function updateStats() {
             const rows = document.querySelectorAll('#tracker tbody tr');
             const total = rows.length;
@@ -237,6 +236,10 @@
             const whatsappCells = document.querySelectorAll('#tracker tbody td:nth-child(4)');
             const whatsappOptions = ['Yes', 'No', 'Unknown'];
             whatsappCells.forEach(cell => {
+                // Set initial value if empty
+                if (!cell.textContent.trim()) {
+                    cell.textContent = 'Unknown';
+                }
                 cell.addEventListener('click', function() {
                     const current = this.textContent.trim();
                     const currentIndex = whatsappOptions.indexOf(current);
@@ -265,8 +268,6 @@
                     });
                 });
             });
-            });
-        });
-    </script>
+        });</script>
 </body>
 </html>
