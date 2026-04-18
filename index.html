@@ -41,7 +41,7 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Status</th>
-                <th>Contact Info</th>
+                <th>In WhatsApp?</th>
                 <th>Notes</th>
             </tr>
         </thead>
@@ -122,7 +122,7 @@
 <tr><td>74</td><td>Mark David Bligh</td><td class="status-not-contacted">Not contacted</td><td></td><td></td></tr>
 <tr><td>75</td><td>Martin Harold Chamberlain</td><td class="status-not-contacted">Not contacted</td><td></td><td></td></tr>
 <tr><td>76</td><td>Matthew St John Parsons</td><td class="status-not-contacted">Not contacted</td><td></td><td></td></tr>
-<tr><td>77</td><td>Matthew Robson</td><td class="status-attending">Attending ✓</td><td>WhatsApp organizer</td><td>You</td></tr>
+<tr><td>77</td><td>Matthew Robson</td><td class="status-attending">Attending ✓</td><td>Yes (organizer)</td><td>You</td></tr>
 <tr><td>78</td><td>Matthew Williams</td><td class="status-not-contacted">Not contacted</td><td></td><td></td></tr>
 <tr><td>79</td><td>Michael Christopher Bayne</td><td class="status-not-contacted">Not contacted</td><td></td><td></td></tr>
 <tr><td>80</td><td>Michael Richard Martin Thomas</td><td class="status-not-contacted">Not contacted</td><td></td><td></td></tr>
@@ -233,9 +233,21 @@
                 });
             });
             
-            // Allow editing contact info (4th column) and notes (5th column)
-            const editableCells = document.querySelectorAll('#tracker tbody td:nth-child(4), #tracker tbody td:nth-child(5)');
-            editableCells.forEach(cell => {
+            // WhatsApp column toggle (4th column) - click to cycle: Yes/No/Unknown
+            const whatsappCells = document.querySelectorAll('#tracker tbody td:nth-child(4)');
+            const whatsappOptions = ['Yes', 'No', 'Unknown'];
+            whatsappCells.forEach(cell => {
+                cell.addEventListener('click', function() {
+                    const current = this.textContent.trim();
+                    const currentIndex = whatsappOptions.indexOf(current);
+                    const nextIndex = (currentIndex + 1) % whatsappOptions.length;
+                    this.textContent = whatsappOptions[nextIndex];
+                });
+            });
+            
+            // Notes column editing (5th column) - double-click to edit
+            const noteCells = document.querySelectorAll('#tracker tbody td:nth-child(5)');
+            noteCells.forEach(cell => {
                 cell.addEventListener('dblclick', function() {
                     const currentText = this.textContent;
                     this.innerHTML = '<input type="text" value="' + currentText + '" style="width:100%;">';
